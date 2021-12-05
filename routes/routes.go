@@ -32,6 +32,14 @@ func Init() *gin.Engine {
 		c.String(http.StatusOK, "Welcome gin app!")
 	})
 
+	r.GET("/check", func(c *gin.Context) {
+		data := make(map[string]string)
+		data["api"] = "test api"
+		data["version"] = "v1"
+
+		c.JSON(http.StatusOK, data)
+	})
+
 	r.GET("/test", func(c *gin.Context) {
 		client := &http.Client{}
 
