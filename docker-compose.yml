@@ -1,0 +1,29 @@
+version: "3.9"
+services:
+  app:
+    build:
+      context: .
+      target: builder
+      args: 
+       - GOLANG_VERSION=1.17.2
+       - ALPINE_VERSION=3.14
+    volumes:
+      - ./:/app
+      - logvolume01:/var/log
+      - logvolume02:/var/app/var/log
+    tty: true
+    ports:
+      - 8085:8085
+    depends_on:
+      - redis
+    networks:
+      - app
+
+networks:
+  app: {}
+
+volumes:
+  logvolume01: { }
+  logvolume02: { }
+  redisdata: { }
+  pgdata: { }
