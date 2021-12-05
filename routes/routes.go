@@ -1,6 +1,8 @@
 package routes
 
 import (
+	"encoding/json"
+	"io"
 	"net/http"
 
 	"github.com/chunlinwang/golang-gin-docker-boilerplate/controllers"
@@ -28,6 +30,25 @@ func Init() *gin.Engine {
 
 	r.GET("/", func(c *gin.Context) {
 		c.String(http.StatusOK, "Welcome gin app!")
+	})
+
+	r.GET("/test", func(c *gin.Context) {
+		client := &http.Client{}
+
+		jsonPath := "https://raw.githubusercontent.com/chunlinwang/golang-excerces/main/example.json"
+		req, _ := http.NewRequest("GET", jsonPath, nil)
+
+		resp, _ := client.Do(req)
+
+		defer resp.Body.Close()
+
+		body, _ := io.ReadAll(resp.Body)
+
+		var decodeJson []map[string]interface{}
+
+		json.Unmarshal(body, &decodeJson)
+
+		c.PureJSON(200, decodeJson)
 	})
 
 	return r
