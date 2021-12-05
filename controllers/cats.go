@@ -8,13 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type CatController struct{}
-
-type CatQueryOptions struct {
-	Limit int    `default:"5" form:"limit"`
-	Page  int    `default:"1" form:"page"`
-	order string `default:"DESC" form:"order"`
-}
+type CatController struct{}	
 
 func (this *CatController) Cats(c *gin.Context) {
 	var catsOptins services.CatQueryOptions
